@@ -15,7 +15,6 @@ export class UploadWebview extends BaseWebView {
       true,
     );
     this.onDidReceiveMessage(async (e) => {
-      const vm = this;
       if (e.type === WebCommand.INIT_UPLOAD_FILES) {
         const fileSizes: string[] = [];
         const sizeArr: number[] = [];
@@ -33,9 +32,9 @@ export class UploadWebview extends BaseWebView {
           sizeArr,
         });
       } else if (e.type === WebCommand.CHOOSE_UPLOAD_FILES) {
-        this.uploadBatch(vm, e, data);
+        this.uploadBatch(this, e, data);
       } else if (e.type === WebCommand.CHOOSE_UPLOAD_FILES_TINYPNG) {
-        this.uploadBatch(vm, e, data);
+        this.uploadBatch(this``, e, data);
       } else if (e.type === WebCommand.CLOSE_UPLOAD_WEBVIEW) {
         this.dispose('./web/webview-upload.html');
       }

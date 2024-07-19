@@ -9,6 +9,7 @@
 import fs from 'fs';
 import https from 'https';
 import { URL } from 'url';
+
 import { getSizeString, isSupportTinyPng } from '../common/Utils';
 import { AliOss } from './AliOss';
 const max = 5200000; // 5MB == 5242848.754299136
@@ -28,7 +29,11 @@ const options: any = {
 };
 
 export class TinyPng {
-  public static async uploadFileByApi(ossPath: string, localFilePath: string, cb: Function) {
+  public static async uploadFileByApi(
+    ossPath: string,
+    localFilePath: string,
+    cb: (result: any) => void,
+  ) {
     fs.stat(localFilePath, async (err: any, stats: any) => {
       if (err) {
         return console.error(err);
@@ -45,7 +50,7 @@ export class TinyPng {
     });
   }
 
-  public static async uploadOssFile(ossPath: string, buff: Buffer, cb: Function) {
+  public static async uploadOssFile(ossPath: string, buff: Buffer, cb: (result: any) => void) {
     // 通过 X-Forwarded-For 头部伪造客户端IP
     options.headers['X-Forwarded-For'] = getRandomIP();
     // 上传oss文件到TinyPng
@@ -74,7 +79,7 @@ export class TinyPng {
         reqTinyPng.end();
       });
     });
-    req.write(buff, 'buffer');
+    req.write(buff, 'binary');
     req.on('error', (e: any) => {
       cb({ code: 0, data: e.message });
     });
@@ -92,7 +97,7 @@ function getRandomIP(): any {
 // 异步API,压缩图片
 // {"error":"Bad request","message":"Request is invalid"}
 // {"input": { "size": 887, "type": "image/png" },"output": { "size": 785, "type": "image/png", "width": 81, "height": 81, "ratio": 0.885, "url": "https://tinypng.com/web/output/7aztz90nq5p9545zch8gjzqg5ubdatd6" }}
-function tpFileUpload(ossPath: string, file: string, cb: Function) {
+function tpFileUpload(ossPath: string, file: string, cb: (result: any) => void) {
   const req = https.request(options, function (res: any) {
     res.on('data', (buf: any) => {
       const obj = JSON.parse(buf.toString());

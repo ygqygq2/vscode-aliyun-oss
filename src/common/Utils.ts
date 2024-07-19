@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as vscode from 'vscode';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const byteSize = require('byte-size');
 
 export interface Progress {

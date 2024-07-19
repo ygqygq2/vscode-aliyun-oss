@@ -3,6 +3,7 @@ import * as vscode from 'vscode';
 
 import { AliOssConfiguration } from '../common/AliOssConfiguration';
 import { getSizeString } from '../common/Utils';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const OSS = require('ali-oss');
 
 export class AliOss {
