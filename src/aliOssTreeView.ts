@@ -43,7 +43,7 @@ export class AliOssTreeView {
     vscode.commands.registerCommand('alioss.configuration', async (item: any) => {
       const webview: BaseWebView = new SettingWebview(context);
       webview.show({
-        cb: (oss: any, validate: Function) => {
+        cb: (oss: any, validate: (isOss: boolean) => void) => {
           AliOss.initOss(oss).then((isOss) => {
             if (isOss) {
               this.setState('initialized');

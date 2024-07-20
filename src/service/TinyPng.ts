@@ -120,7 +120,7 @@ function tpFileUpload(ossPath: string, file: string, cb: (result: any) => void) 
 }
 
 // 该方法被循环调用,请求图片数据
-function fileUpdate(ossPath: string, imgPath: string, obj: any, cb: Function) {
+function fileUpdate(ossPath: string, imgPath: string, obj: any, cb: (result: any) => void) {
   const options = new URL(obj.output.url);
   const outputSize = getSizeString(obj.output.size);
   const req = https.request(options, (res: any) => {
