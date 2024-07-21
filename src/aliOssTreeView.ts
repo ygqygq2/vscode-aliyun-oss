@@ -184,6 +184,11 @@ export class AliOssTreeView {
     });
     // 打开上传弹框
     vscode.commands.registerCommand('alioss.promptFile', async (item: any) => {
+      console.log("🚀 ~ file: aliOssTreeView.ts:187 ~ item:", item)
+      if (!item || !item.dir) {
+        vscode.window.showErrorMessage('无效的目录信息。');
+        return;
+      }
       await promptForTargetDirectory(context, item.dir);
     });
     // OSS上传页面
